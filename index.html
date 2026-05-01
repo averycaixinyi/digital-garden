@@ -1,11 +1,69 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>我的测试网站</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avery Cai | Digital Garden</title>
+    
+    <!-- 引入 Google Fonts 中的 Noto Serif -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <style>
+        /* 1. 实现全屏居中的核心设置 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%; /* 必须设置高度为100% */
+            width: 100%;
+        }
+
+        body {
+            /* 使用 Flexbox 布局 */
+            display: flex;
+            flex-direction: column; /* 让内容垂直排列 */
+            justify-content: center; /* 水平居中 (在主轴方向) */
+            align-items: center;     /* 垂直居中 (在交叉轴方向) */
+            
+            /* 2. 字体设置 */
+            font-family: 'Noto Serif', serif;
+            background-color: #fcfcfc; /* 浅灰色背景，比纯白更护眼 */
+            color: #333;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .date-highlight {
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, world!</h1>
-    <p>这是我的测试网站。</p>
+
+    <div class="container">
+        <h1>Welcome to my digital garden</h1>
+        <p>This space was planted on May 1st, 2026 and is currently under cultivation.</p>
+        <p>Please check back for new growth on <span class="date-highlight">May 15, 2026</span>.</p>
+    </div>
+
 </body>
 </html>
