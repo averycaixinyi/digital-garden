@@ -11,52 +11,48 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <style>
-        /* 1. 基础布局调整 */
+        /* 1. 基础布局 */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
             width: 100%;
-            overflow: hidden; /* 防止背景模糊边缘产生滚动条 */
+            overflow: hidden;
         }
 
         body {
-            /* 使用 Flexbox 实现全屏居中 */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            
             font-family: 'Noto Serif', serif;
-            background-color: #ffffff; /* 边缘底色为纯白 */
+            background-color: #ffffff;
             color: #333;
             line-height: 1.8;
             text-align: center;
             position: relative;
         }
 
-        /* 2. 毛玻璃渐变背景实现 (纯代码实现) */
+        /* 2. 背景 */
         body::before {
             content: "";
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 120%; /* 略大于屏幕确保模糊覆盖全屏 */
+            width: 120%;
             height: 120%;
-            /* 径向渐变：中心为嫩绿色 (rgba(152, 251, 152, 0.4))，向外扩散至透明 */
             background: radial-gradient(
                 circle at center, 
                 rgba(152, 251, 152, 0.45) 0%, 
                 rgba(255, 255, 255, 0) 60%
             );
-            /* 高斯模糊：产生毛玻璃般的漫反射效果 */
             filter: blur(80px);
-            z-index: -1; /* 置于内容层下方 */
+            z-index: -1;
         }
 
         .container {
-            max-width: 900px; /* 适当调宽容器以配合不换行文字 */
+            max-width: 900px;
             padding: 20px;
         }
 
@@ -70,19 +66,71 @@
         p {
             font-size: 1.15rem;
             color: #555;
-            /* 核心修改：强制整行文字不换行 */
             white-space: nowrap; 
             margin: 10px 0;
         }
 
-        .date-highlight {
-            font-weight: 600;
-            color: #2c3e50;
-            border-bottom: 1.5px solid rgba(44, 62, 80, 0.2);
-            padding-bottom: 2px;
+        /* 3. 超链接交互逻辑 */
+        .garden-link {
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            /* 下划线效果：使用 border-bottom 模拟以便控制粗细和距离 */
+            border-bottom: 1px solid #333;
+            padding-bottom: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        /* 移动端简单适配：保持不换行的同时微调字号 */
+        .garden-link:hover {
+            color: #2e7d32; /* 深绿色 */
+            border-bottom: 3px solid #2e7d32; /* 加粗变色 */
+            padding-bottom: 4px; /* 下划线微微下移 */
+        }
+
+        /* 4. 对话框提示 (Tooltip) */
+        .garden-link::after {
+            content: "maggieappleton.com/garden-history"; /* 对话框显示内容 */
+            position: absolute;
+            bottom: 150%; /* 位于上方 */
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background-color: white;
+            color: #666;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: auto; /* 允许点击对话框 */
+            border: 1px solid #eee;
+        }
+
+        /* 5. 对话框小箭头 */
+        .garden-link::before {
+            content: "";
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: white transparent transparent transparent;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .garden-link:hover::after,
+        .garden-link:hover::before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
         @media (max-width: 600px) {
             h1 { font-size: 1.8rem; }
             p { font-size: 0.95rem; }
@@ -92,9 +140,11 @@
 <body>
 
     <div class="container">
-        <h1>Welcome to my digital garden</h1>
+        <h1>Welcome to My 
+            <a href="https://maggieappleton.com/garden-history" class="garden-link">Digital Garden</a>
+        </h1>
         <p>This space was planted on May 1st, 2026 and is currently under cultivation.</p>
-        <p>Please check back for new growth on <span class="date-highlight">May 15, 2026</span>.</p>
+        <p>Please check back for new growth on May 15, 2026.</p>
     </div>
 
 </body>
