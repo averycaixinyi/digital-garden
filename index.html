@@ -70,66 +70,73 @@
             margin: 10px 0;
         }
 
-        /* 3. 超链接交互逻辑 */
-        .garden-link {
-            text-decoration: none;
-            color: inherit;
-            position: relative;
-            /* 下划线效果：使用 border-bottom 模拟以便控制粗细和距离 */
-            border-bottom: 1px solid #333;
-            padding-bottom: 1px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
+/* 3. 超链接交互逻辑 - 优化版 */
+.garden-link {
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    /* 使用 box-shadow 模拟下划线：水平0, 垂直1px, 模糊0, 颜色inherit */
+    box-shadow: 0 1px 0 0 currentColor;
+    padding-bottom: 2px;
+    /* 仅针对特定属性进行过渡，速度加快 */
+    transition: color 0.15s ease-out, box-shadow 0.15s ease-out, padding-bottom 0.15s ease-out;
+    cursor: pointer;
+}
 
-        .garden-link:hover {
-            color: #2e7d32; /* 深绿色 */
-            border-bottom: 3px solid #2e7d32; /* 加粗变色 */
-            padding-bottom: 4px; /* 下划线微微下移 */
-        }
+.garden-link:hover {
+    color: #2e7d32; 
+    /* 下划线变厚 (3px) 并保持颜色同步 */
+    box-shadow: 0 3px 0 0 #2e7d32; 
+    padding-bottom: 5px; /* 线条下移 */
+}
 
-        /* 4. 对话框提示 (Tooltip) */
-        .garden-link::after {
-            content: "maggieappleton.com/garden-history"; /* 对话框显示内容 */
-            position: absolute;
-            bottom: 150%; /* 位于上方 */
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            background-color: white;
-            color: #666;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            pointer-events: auto; /* 允许点击对话框 */
-            border: 1px solid #eee;
-        }
+/* 4. 对话框提示 - 优化版 */
+.garden-link::after {
+    content: "maggieappleton.com/garden-history";
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+    transform: translateX(-50%) translateY(5px); /* 减小初始位移距离 */
+    background-color: white;
+    color: #666;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    /* 这里的位移使用 transform 性能最好 */
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+    pointer-events: auto;
+    border: 1px solid #eee;
+}
 
-        /* 5. 对话框小箭头 */
-        .garden-link::before {
-            content: "";
-            position: absolute;
-            bottom: 130%;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 6px;
-            border-style: solid;
-            border-color: white transparent transparent transparent;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
+/* 5. 箭头同步加快 */
+.garden-link::before {
+    content: "";
+    position: absolute;
+    bottom: 132%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease-out;
+}
 
-        .garden-link:hover::after,
-        .garden-link:hover::before {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
-        }
+.garden-link:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.garden-link:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
 
         @media (max-width: 600px) {
             h1 { font-size: 1.8rem; }
