@@ -5,55 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avery Cai | Digital Garden</title>
     
-    <!-- 引入 Google Fonts 中的 Noto Serif -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <style>
-        /* 1. 实现全屏居中的核心设置 */
+        /* 1. 基础布局调整 */
         body, html {
             margin: 0;
             padding: 0;
-            height: 100%; /* 必须设置高度为100% */
+            height: 100%;
             width: 100%;
+            overflow: hidden; /* 防止背景模糊边缘产生滚动条 */
         }
 
         body {
-            /* 使用 Flexbox 布局 */
+            /* 使用 Flexbox 实现全屏居中 */
             display: flex;
-            flex-direction: column; /* 让内容垂直排列 */
-            justify-content: center; /* 水平居中 (在主轴方向) */
-            align-items: center;     /* 垂直居中 (在交叉轴方向) */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             
-            /* 2. 字体设置 */
             font-family: 'Noto Serif', serif;
-            background-color: #fcfcfc; /* 浅灰色背景，比纯白更护眼 */
+            background-color: #ffffff; /* 边缘底色为纯白 */
             color: #333;
             line-height: 1.8;
             text-align: center;
+            position: relative;
+        }
+
+        /* 2. 毛玻璃渐变背景实现 (纯代码实现) */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%; /* 略大于屏幕确保模糊覆盖全屏 */
+            height: 120%;
+            /* 径向渐变：中心为嫩绿色 (rgba(152, 251, 152, 0.4))，向外扩散至透明 */
+            background: radial-gradient(
+                circle at center, 
+                rgba(152, 251, 152, 0.45) 0%, 
+                rgba(255, 255, 255, 0) 60%
+            );
+            /* 高斯模糊：产生毛玻璃般的漫反射效果 */
+            filter: blur(80px);
+            z-index: -1; /* 置于内容层下方 */
         }
 
         .container {
-            max-width: 600px;
+            max-width: 900px; /* 适当调宽容器以配合不换行文字 */
             padding: 20px;
         }
 
         h1 {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 500;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
         }
 
         p {
-            font-size: 1.1rem;
-            color: #666;
+            font-size: 1.15rem;
+            color: #555;
+            /* 核心修改：强制整行文字不换行 */
+            white-space: nowrap; 
+            margin: 10px 0;
         }
 
         .date-highlight {
             font-weight: 600;
             color: #2c3e50;
-            border-bottom: 1px solid #ccc;
+            border-bottom: 1.5px solid rgba(44, 62, 80, 0.2);
+            padding-bottom: 2px;
+        }
+
+        /* 移动端简单适配：保持不换行的同时微调字号 */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            p { font-size: 0.95rem; }
         }
     </style>
 </head>
